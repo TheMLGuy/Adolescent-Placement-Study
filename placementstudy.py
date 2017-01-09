@@ -48,18 +48,18 @@ testLabel=np.array(oneHotLabel[355:508])
 
    
 #yperparameters
-learning_rate=0.01
-epochs=50
+learning_rate=0.001
+epochs=100
 
 #placeholders
 X=tf.placeholder(tf.float32,[None,11])
 y=tf.placeholder(tf.float32,[None,4])
 
 #model weights and bias
-W=tf.Variable(tf.random_normal([11,4]))
-b=tf.Variable(tf.random_normal([4]))
+W=tf.Variable(tf.zeros([11,4]))
+b=tf.Variable(tf.zeros([4]))
 
-out=tf.matmul(X,W)+b
+out=tf.nn.softmax(tf.matmul(X,W)+b)
 
 costFunction=tf.reduce_mean(-y*tf.log(out),reduction_indices=1)
 optimizer=tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(costFunction)
@@ -81,7 +81,7 @@ with tf.Session() as ses:
     accuracy=tf.reduce_mean(tf.cast(prediction,tf.float32))
     print("Accuracy in argmax "+str(accuracy.eval({X:testData,y:testLabel})*100))
     
-    correct_pred2 = tf.nn.in_top_k(out, tf.cast(tf.argmax(y,1), "int32"), 5)
-    accuracy2 = tf.reduce_mean(tf.cast(correct_pred2, tf.float32))
-    print ("Accuracy of 'in top k' evaluation method " + str(accuracy2.eval({X:testData, y:testLabel})*100))
-    
+#    correct_pred2 = tf.nn.in_top_k(out, tf.cast(tf.argmax(y,1), "int32"), 5)
+#    accuracy2 = tf.reduce_mean(tf.cast(correct_pred2, tf.float32))
+#    print ("Accuracy of 'in top k' evaluation method " + str(accuracy2.eval({X:testData, y:testLabel})*100))
+#    
