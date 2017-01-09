@@ -38,7 +38,7 @@ for j in label:
     
 placementDF['AGE']=normalize(placementDF['AGE'])
 placementDF['BEHAV']=normalize(placementDF['BEHAV'])
-
+placementDF['LOS']=normalize(placementDF['LOS'])
 #train and test data
 trainData=np.array(placementDF[0:355])
 trainLabel=np.array(oneHotLabel[0:355])
@@ -48,8 +48,8 @@ testLabel=np.array(oneHotLabel[355:508])
 
    
 #yperparameters
-learning_rate=0.001
-epochs=100
+learning_rate=0.01
+epochs=500
 
 #placeholders
 X=tf.placeholder(tf.float32,[None,11])
